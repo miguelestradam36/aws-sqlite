@@ -5,7 +5,7 @@ import os
 # Services module import
 # TODO: Import the services you plan to use
 #-----------------------------------------------------------
-from modules.storage_services_module._aws_ import AWSManager
+from modules.aws.connector import AWSManager
 from modules.database.connector import DatabaseConnector
 #-----------------------------------------------------------
 if __name__ == "__main__":
@@ -23,10 +23,11 @@ if __name__ == "__main__":
         import csv
         data = database.execute_query('SELECT * FROM Invoices;')
         aws_buff = AWSManager()
-        filename = r"\..\config\defaults.yaml"
-        filepath = current_dir_path + filename
         csvfile = current_dir_path + '\\output\\result.csv'
-        aws_buff.secrets_log_in(filepath)
+        #TODO: 
+        primary_key_aws = "[PRIMARY KEY]"
+        secret_primary_key_aws = "[SECRET PRIMARY KEY]"
+        aws_buff.manual_secrets_log_in(primary_key_aws, secret_primary_key_aws)
         with open(csvfile, 'w') as file:
             write = csv.writer(file)
             write.writerows(data)

@@ -4,9 +4,9 @@ class SetUpExecuter():
     ---
     """
     filepath = "..\\..\\..\\config\\defaults.yaml" #file path for configuration files
-    venv_prefix = "..\\..\\..\\venv\\Scripts\\python -m"
-    os = __import__('os')
-    log = __import__('logging')
+    venv_prefix = "python -m" #can be modified to execute from venv
+    os = __import__('os') #os module as attribute
+    log = __import__('logging') #logging module as attribute
     """
     Methods
     ---

@@ -1,38 +1,3 @@
-import os
-import sys
-import threading
-
-class ProgressPercentage(object):
-    """
-    Built-in Methods
-    """
-    def __init__(self, filename:str):
-        """
-        Function that initiliazes class
-        Params: filename (string [Required])
-        Objective: Get filename and lock thread
-        """
-        self._filename = filename
-        self._size = float(os.path.getsize(filename)) #get file size
-        self._seen_so_far = 0
-        self._lock = threading.Lock()
-
-    def __call__(self, bytes_amount):
-        """
-        Function executed upon the call operator
-        Params: bytes_amount [int [Required]]
-        Objective: Flag process completed upon size upload
-        """
-        # To simplify, assume this is hooked up to a single filename
-        with self._lock:
-            self._seen_so_far += bytes_amount # Attribute: total amount processed
-            percentage = (self._seen_so_far / self._size) * 100
-            sys.stdout.write(
-                "\r%s  %s / %s  (%.2f%%)" % (
-                    self._filename, self._seen_so_far, self._size,
-                    percentage))
-            sys.stdout.flush()
-
 class AWSManager():
     """
     Attributes
@@ -122,6 +87,40 @@ class AWSManager():
         Params: file_name (string [Required])
         Objetive: Upload file to S3 bucket, using filepath
         """
+        class ProgressPercentage(object):
+            """
+            Built-in Methods
+            """
+            def __init__(self, filename:str):
+                """
+                Function that initiliazes class
+                Params: filename (string [Required])
+                Objective: Get filename and lock thread
+                """
+                import os 
+                import threading
+                self._filename = filename
+                self._size = float(os.path.getsize(filename)) #get file size
+                self._seen_so_far = 0
+                self._lock = threading.Lock()
+
+            def __call__(self, bytes_amount):
+                """
+                Function executed upon the call operator
+                Params: bytes_amount [int [Required]]
+                Objective: Flag process completed upon size upload
+                """
+                # To simplify, assume this is hooked up to a single filename
+                import sys
+                with self._lock:
+                    self._seen_so_far += bytes_amount # Attribute: total amount processed
+                    percentage = (self._seen_so_far / self._size) * 100
+                    sys.stdout.write(
+                        "\r%s  %s / %s  (%.2f%%)" % (
+                            self._filename, self._seen_so_far, self._size,
+                            percentage))
+                    sys.stdout.flush()
+
         try:
             import os
             # If S3 object_name was not specified, use file_name
