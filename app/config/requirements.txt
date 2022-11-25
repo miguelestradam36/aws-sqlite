@@ -1,0 +1,5 @@
+tox
+pyyaml
+boto3
+sqlite3
+pytest

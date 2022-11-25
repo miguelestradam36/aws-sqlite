@@ -1,0 +1,20 @@
+python:
+  global:
+    modules:
+      standard:
+        - import: pandas
+          install: pandas
+        - import: numpy
+          install: numpy
+        - import: yaml
+          install: PyYAML
+      test:
+        - import: pytest
+          install: pytest
+        - import: pytest
+          install: pytest-virtualenv
+  services:
+    # Modules needed for this service
+    modules:
+      - import: boto3
+        install: boto3
