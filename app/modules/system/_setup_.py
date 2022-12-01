@@ -13,7 +13,11 @@ class SetUpExecuter():
     """
     def __init__(self):
         """
-        
+        Function that intiliazes class 
+        ---
+        Params: No arguments/parameters
+        Objective: Save logger file and check modules into environment in class creation
+        Returns: SetUpExecuter class
         """
         import logging
         logFileFormatter = logging.Formatter(
@@ -33,8 +37,14 @@ class SetUpExecuter():
         self.install_api_modules()
 
     def install_services(self)->None:
+        """
+        Class method
+        ---
+        Params: No arguments/parameters
+        Objective: Checks modules into environment
+        Returns: None
+        """
         print("Checking in to api-connection and app installations...")
-
         for module in self.yaml_config["python"]["global"]["modules"]["standard"]:
             try:
                 self.log.info("Checking {} module into venv".format(module["import"]))
@@ -43,6 +53,13 @@ class SetUpExecuter():
                 self.log.info("Installing {} module into venv".format(module["install"]))
                 self.os.system("{} pip install {}".format(self.venv_prefix, module["install"]))
     def install_test_modules(self)->None:
+        """
+        Class method
+        ---
+        Params: No arguments/parameters
+        Objective: Checks test modules into environment
+        Returns: None
+        """
         self.log.info("Checking in to services installation...")
 
         import sys
@@ -64,7 +81,13 @@ class SetUpExecuter():
                 self.os.system("{} pip install {}".format(self.venv_prefix, module["install"]))
 
     def read_defaults(self)->None:
-
+        """
+        Class method
+        ---
+        Params: No arguments/parameters
+        Objective: Reads values from YAML file
+        Returns: None
+        """
         fullpath = self.os.path.join(self.os.path.dirname(__file__), self.filepath)
 
         try:
