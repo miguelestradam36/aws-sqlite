@@ -6,7 +6,7 @@ def test_dependencies():
     import os
 
     # Repeated values
-    filepath = "../src/config/defaults.yaml"
+    filepath = "../config/defaults.yaml"
     fullpath = os.path.join(os.path.dirname(__file__), filepath)
 
     with open(fullpath, 'r') as file:
