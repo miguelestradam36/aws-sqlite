@@ -3,3 +3,4 @@ pyyaml
 boto3
 pysqlite3
 pytest
+pandas
